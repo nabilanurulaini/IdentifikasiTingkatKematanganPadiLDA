@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% comment %} title section {% endcomment %}
+{% block title %}
+    <title>{{ title }}</title>
+{% endblock title %}
+{% comment %} heading section {% endcomment %}
+{% block heading%}
+<h5 class="card-header"> {{heading}}</h5>
+{% endblock heading %}
+{% comment %} content section {% endcomment %}
+{% block content %}
+<div class="card-group">
+    <div class="card text-white bg-dark mb-3">
+        <img src="../skripsi/static/img/{{ gambarasli }}" alt="Gambar" style="width: 400pt; height: 400pt">
+      <div class="card-body">
+        <h5 class="card-title">Gambar Sebelum Preprocessing</h5>
+        {% comment %} <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
+      </div>
+    </div>
+    <div class="card text-white bg-dark mb-3"> 
+        <img src="../skripsi/static/img/{{ preprocessing }}" alt="preprocessing" style="width: 400pt; height: 400pt">
+      <div class="card-body">
+        <h5 class="card-title">Setelah Preprocessing</h5>
+        <p class="card-text">Hasil : {{ hasil }}</p>
+      </div>
+    </div>
+  </div>
+{% endblock content %}

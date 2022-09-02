@@ -1,0 +1,58 @@
+{% load static %}
+{% load active_link_tags %}
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    {%include "snippets/styles.html" %} 
+    {% block title %} 
+    {% endblock title %}
+
+  </head>
+  <body>
+    
+    <nav class="navbar navbar-expand-lg navbar-light">
+     <div class="container-fluid" style="margin:20px">
+      <a class="navbar-brand" href="/">
+        <img src="{% static 'assets/img/rice.png' %}" alt="Your Logo" title="Klasifikasi Kematangan Padi" style="height:35px;" />
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto my-2 my-lg-0" style="--bs-scroll-height: 100px;">
+            <li class="nav-item {% active_link 'home' 'active' %}">
+              <a class="nav-link" href="{% url 'home' %}">Home</a>
+            </li>
+            <li class="nav-item {% active_link 'training' 'active' %}">
+              <a class="nav-link" href="{% url 'training' %}">Training</a>
+            </li>
+            {% comment %} <li class="nav-item {% active_link 'testing' 'active' %}">
+              <a class="nav-link" href="{% url 'testing' %}">Testing</a>
+            </li> {% endcomment %}
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    
+      {% block heading %} 
+      {% endblock heading %}
+
+      {% block content %}
+      {% endblock content%}
+      
+
+    {% block js %}
+    {% endblock js%}
+  </body>
+  {% include "snippets/scripts.html" %}
+  <script>
+    function myFunction() {
+       var element = document.getElementById("mybody");
+       element.classList.add("fadeMe");
+    }
+  </script>
+</html>
