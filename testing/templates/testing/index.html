@@ -17,22 +17,22 @@
                 {% csrf_token %}
                 <div class="main-input">
                     <div class="d-grid">
-                        <label for="image">Masukkan gambar</label>   
+                        <label for="image">Insert image </label>   
                     </div>
                     <div class="d-grid">
                         <input type="file" class="contact-input" name="image"  accept="image/*" required>
                     </div>
-
-                    <div class="d-grid">
+                    <div class="text-right">
+                        <button  type="submit" class="btn btn-style btn-secondary btn-contact" onclick="myFunction()" value="submit">Deteksi</button>
+                    </div>
+                    {% comment %} <div class="d-grid">
                         <label for="image">Masukkan Model</label>   
                     </div>
                     <div class="d-grid">
                         <input type="file" class="contact-input" name="model"  accept="file/*" required>
-                    </div>
+                    </div> {% endcomment %}
                 </div>
-                <div class="text-right">
-                    <button  type="submit" class="btn btn-style btn-secondary btn-contact" onclick="myFunction()" value="submit">Deteksi</button>
-                </div>
+               
             </form>
         </div>
     </div>

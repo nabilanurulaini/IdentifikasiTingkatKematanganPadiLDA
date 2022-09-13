@@ -26,10 +26,13 @@ def index(request):
 def testing(request):
     if request.method == 'POST' and request.FILES['image']:
         image = request.FILES['image']
-
+        print(image.name)
         fs = FileSystemStorage()
-        mdl = "model.sav"
+        mdl = 'C:\Django\skripsi\skripsi\model.sav'
         best_model = pickle.load(open(mdl, "rb"))
+
+        #prediction = best_model.predict(mdl)
+        # print(prediction)
         filename = fs.save(image.name, image)
         image_uploaded = fs.path(filename)
 
@@ -63,32 +66,42 @@ def testing(request):
         # Bitwise-AND mask dan gambar asli
         image = cv2.bitwise_and(equalized, equalized, mask=final_mask)
         # Final processing dengan memberikan sedikit blur
-        image = cv2.GaussianBlur(image, (3, 3), 0)
+        #image = cv2.GaussianBlur(image, (3, 3), 0)
 
-        try:
-            features = cv2.Canny(image, 100, 200)
-            features = np.reshape(features, (448*336))
-            #result = features
-            directory = r'C:\Django\skripsi\skripsi\static\img'
-            preprocessing = "result-{}".format(image.name)
-            cv2.imwrite(os.path.join(directory, preprocessing), features)
+        result = image
+        result = cv2.cvtColor(image, cv2.COLOR_HSV2BGR)
+        directory = r'C:\Django\skripsi\skripsi\static\img'
+        preprocessing = "result-{}".format(filename)
+        cv2.imwrite(os.path.join(directory, preprocessing), result)
+        features = cv2.mean(result)[:3]
+        data.append([features, 0])
+        # #try:
+        #     features = cv2.Canny(image, 100, 200)
+        #     features = np.reshape(features, (448*336))
+        #     # result = features
+        #     directory = r'C:\Django\skripsi\skripsi\static\img'
+        #     preprocessing = "result-{}".format(image.name)
+        #     cv2.imwrite(os.path.join(directory, preprocessing), features)
 
-            data.append([features, 0])
-        except Exception as e:
-            print(e)
+        #     data.append([features, 0])
+        # #except Exception as e:
+        # print(e)
         features = []
         labels = []
         for feature, label in data:
             features.append(feature)
             labels.append(label)
-        best_model = np.squeeze
+
         prediction = best_model.predict(features)
+        print(prediction)
+        print(label)
 
     context = {
         'title': 'Hasil Deteksi - LDA',
         'heading': 'Hasil Deteksi',
-        'hasil': "Matang" if prediction == 0 else "Mentah",
+        'hasil': "Mentah" if prediction == 0 else "Matang",
         'preprocessing': preprocessing,
         'gambarasli': gambarasli,
+        'label': labels,
     }
     return render(request, 'testing/testresult.html', context)
