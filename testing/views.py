@@ -48,7 +48,7 @@ def testing(request):
         hsv = cv2.cvtColor(rgb, cv2.COLOR_RGB2HSV)
         H, S, V = cv2. split(hsv)
         # mendefinisikan clahe atau metode histogram ewualization yang dipakai, tile grid size 8,8 merupakan default sie dari clahe
-        clahe = cv2.createCLAHE(clipLimit=2.0, tileGridSize=(8, 8))
+        clahe = cv2.createCLAHE(clipLimit=1.0, tileGridSize=(8, 8))
         # menerapkan clahe pada value
         equalized_V = clahe.apply(V)
         # melakukan penggabungan anara h,s, dan value yang telah diequalized
@@ -73,7 +73,8 @@ def testing(request):
         directory = r'C:\Django\skripsi\skripsi\static\img'
         preprocessing = "result-{}".format(filename)
         cv2.imwrite(os.path.join(directory, preprocessing), result)
-        features = cv2.mean(result)[:3]
+
+        features = cv2.mean(image)[:3]
         data.append([features, 0])
         # #try:
         #     features = cv2.Canny(image, 100, 200)

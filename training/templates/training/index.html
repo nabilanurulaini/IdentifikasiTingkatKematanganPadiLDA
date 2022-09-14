@@ -4,37 +4,23 @@
 {% endblock heading %}
 {% block content %}
     {% comment %} <h1>Halaman {{heading}}</h1> {% endcomment %}
-
-    <div class="container-fluid" style="margin-top:150px">
-        <div class="row">
-            <div class="col">
-            </div>
-            <div class="col">
-                <form action="/trainresult/" method="POST">
+<div class="w3l-grids-3 py-5">
+    <div class="container py-lg-5 py-md-4" >
+        <h3 class="hny-title mb-lg-5 mb-4">{{heading}}</h3>
+        
+            
+                <form action="/trainresult/" method="POST" >
                     {% csrf_token %}
-                    <div class="input-group mb-3">
-                        <input type="text" name="path" class="form-control" placeholder="Input path location" aria-label="Masukkan path" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                          <button class="btn btn-primary" type="submit" onclick="myFunction()" value="submit">Train</button>
-                        </div>
-                      </div>
-                    {% comment %} <div class="row">
-                        
-                        <div class="col-md-9">
-                            <input type="text" class="form-control" name="path" placeholder="Masukkan Path Folder Data">
-                        </div>
-                        <div class="col-md-3">
-                            <button type="submit" onclick="myFunction()" class="btn btn-dark" value="submit">Train</button>
-                        </div>
-                
-                    </div> {% endcomment %}
+                    <div class="flex-wrap subscribe-wthree-field">
+                        <input type="text" name="path" class="form-control" placeholder="Input path location" aria-label="Masukkan path" aria-describedby="basic-addon2" required="">
+                    
+                        <button class="btn btn-style btn-secondary mt-4" type="submit" onclick="myFunction()" value="submit">Train</button>
+    
+                    </div>
                 </form>
-                <!---->
-            </div>
-            <div class="col">
-            </div>
-        </div>
+            
     </div>
+</div>
     {% block js %}
     <script>
         function myFunction() {

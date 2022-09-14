@@ -60,7 +60,7 @@ def imageprocessing(frame):
     hsv = cv2.cvtColor(rgb, cv2.COLOR_RGB2HSV)
     H, S, V = cv2. split(hsv)
     # mendefinisikan clahe atau metode histogram ewualization yang dipakai, tile grid size 8,8 merupakan default sie dari clahe
-    clahe = cv2.createCLAHE(clipLimit=2.0)
+    clahe = cv2.createCLAHE(clipLimit=1.0)
     # menerapkan clahe pada value
     equalized_V = clahe.apply(V)
     # melakukan penggabungan anara h,s, dan value yang telah diequalized
@@ -94,7 +94,7 @@ def training(request):
         listed = []
         # Menyiapkan variabel penampun data
         data = []
-        feature_matrix = np.zeros((530, 390))
+        
         # Dalam setiap kategori (kelas) akan diambil gambar dan dilakukan preprocessing
         i = 1
         for category in categories:
@@ -148,12 +148,15 @@ def training(request):
             testY = []
             # Split data menjadi data trainX dan testX untuk data fitur
             # Split data menjadi data trainY dan testY untuk data label
+
             for i in test_index:
                 testX.append(features[i])
                 testY.append(labels[i])
+            print("test index: ", test_index)
             for i in train_index:
                 trainX.append(features[i])
                 trainY.append(labels[i])
+            print("train index: ", train_index)
             # Memanggil fungsi classify
             accu, prec, recl, mdl, confmtrx = classify(
                 trainX, trainY, testX, testY)

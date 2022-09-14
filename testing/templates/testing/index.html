@@ -22,7 +22,7 @@
                     <div class="d-grid">
                         <input type="file" class="contact-input" name="image"  accept="image/*" required>
                     </div>
-                    <div class="text-right">
+                    <div class="d-grid">
                         <button  type="submit" class="btn btn-style btn-secondary btn-contact" onclick="myFunction()" value="submit">Deteksi</button>
                     </div>
                     {% comment %} <div class="d-grid">
@@ -37,29 +37,5 @@
         </div>
     </div>
   </div>
-
-
-
-            {% comment %} <form action="/testresult/" method="POST" enctype="multipart/form-data">
-                {% csrf_token %}
-                <div class="main-input">
-                    <div class="form-group">
-                        <label for="gambar">Insert Image</label>
-                        <input type="file" class="form-control" name="gambar"  accept="image/*" required>
-                    </div>
-            
-                    <div class="form-group">
-                        <label for="body">Insert Model</label>
-                        <input type="file" class="form-control" name="model"  accept=".sav" required>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            <div class="d-lg-block d-none">
-                                <button type="submit" onclick="myFunction()" class="btn btn-style btn-secondary ml-lg-3" value="submit">Test</button>
-                            </div>  
-                        </div>
-                    </div>
-                </div>
-            </form> {% endcomment %}
             
 {% endblock content %}

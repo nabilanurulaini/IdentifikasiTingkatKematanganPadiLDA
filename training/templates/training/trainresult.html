@@ -3,7 +3,7 @@
     <title>Google Charts Tutorial</title>
 {% endblock title %}
 {% block content %}
-<div class = "container">
+<div class = "container ">
 
   <select class  ="form-select" name="state" id="maxRows" style="margin-top:30px;margin-bottom:30px">
     <option value="5000">Show all rows</option>
@@ -17,9 +17,9 @@
     <option value="1000">1000</option>
     
   </select>
-  <div class="table-responsive-" style="margin-bottom:30px">
-    <table id="dtBasicExample" class="table table-hover table-primary" style="width:100%; border-spacing: 1em;">
-        <thead class="thead-dark">
+  <div class="table table-responsive" style="margin-bottom:30px">
+    <table id="table" class="table table-hover table-secondary" style="width:100%; border-spacing: 1em;">
+        <thead>
             <tr>
             {% for item in list %}
                 {% if forloop.first %}
