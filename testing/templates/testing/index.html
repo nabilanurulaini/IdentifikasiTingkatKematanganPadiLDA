@@ -16,14 +16,13 @@
             <form action="/testresult/" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="main-input">
-                    <div class="d-grid">
+                    <div class="flex-wrap subscribe-wthree-field">
                         <label for="image">Insert image </label>   
-                    </div>
-                    <div class="d-grid">
+                   
+                   
                         <input type="file" class="contact-input" name="image"  accept="image/*" required>
-                    </div>
-                    <div class="d-grid">
-                        <button  type="submit" class="btn btn-style btn-secondary btn-contact" onclick="myFunction()" value="submit">Deteksi</button>
+                
+                        <button  type="submit" class="btn btn-style btn-secondary mt-2" onclick="myFunction()" value="submit">Test</button>
                     </div>
                     {% comment %} <div class="d-grid">
                         <label for="image">Masukkan Model</label>   

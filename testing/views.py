@@ -18,7 +18,7 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 def index(request):
     context = {
         'title': 'Deteksi - LDA',
-        'heading': 'Deteksi',
+        'heading': 'Testing',
     }
     return render(request, 'testing/index.html', context)
 
