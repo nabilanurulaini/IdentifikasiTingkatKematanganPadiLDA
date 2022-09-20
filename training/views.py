@@ -119,7 +119,7 @@ def training(request):
                     # ekstraksi fitur dengan menggunakan mean HSV
                     # karena cv2.mean mreturns 4 value scalar jadi digunakan :3 untuk mengambil 3 value pertama
                     # Fitur akan disimpan kedalam variabel data, Disimpan bersama dengan label dari setiap kelas
-                    # Kelas matang memiliki label (1) mentah (0)
+                    # Kelas matang memiliki label mentah (0) matang (1)
                     features = cv2.mean(image)[:3]
                     data.append([features, label])
                 except Exception as e:
@@ -143,30 +143,10 @@ def training(request):
         trainX, testX, trainY, testY = train_test_split(
             features, labels, test_size=0.1)
 
-        # cv = KFold(n_splits=4, shuffle=True, random_state=32)
-        # # Split data dengan K fold
-        # for train_index, test_index in cv2.split(features):
-        #      trainX = []
-        #      trainY = []
-        #      testX = []
-        #      testY = []
-        #      # Split data menjadi data trainX dan testX untuk data fitur
-        #      # Split data menjadi data trainY dan testY untuk data label
-
-        # for i in test_index:
-        #          testX.append(features[i])
-        #          testY.append(labels[i])
-        # print("test index: ", test_index)
-        # for i in train_index:
-        #          trainX.append(features[i])
-        #          trainY.append(labels[i])
-        # print("train index: ", train_index)
-        # Memanggil fungsi classify
-
         accu, prec, recl, mdl, confmtrx = classify(
             trainX, trainY, testX, testY)
         print(classify)
-        # Menyimpan hasil setiap fold dar pengujian
+        # Menyimpan hasil 
         acc.append(accu)
         pre.append(prec)
         rec.append(recl)
