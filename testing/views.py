@@ -99,10 +99,11 @@ def testing(request):
 
     context = {
         'title': 'Hasil Deteksi - LDA',
-        'heading': 'Hasil Deteksi',
+        'heading': 'Result',
         'hasil': "Mentah" if prediction == 0 else "Matang",
         'preprocessing': preprocessing,
         'gambarasli': gambarasli,
-        'label': labels,
+        'features': features,
+        'prediction': prediction
     }
     return render(request, 'testing/testresult.html', context)

@@ -4,6 +4,7 @@ from sklearn.metrics import accuracy_score, precision_score, recall_score, confu
 from sklearn.model_selection import train_test_split
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.model_selection import KFold
+from sklearn.model_selection import train_test_split
 
 import os
 import numpy as np
@@ -26,6 +27,7 @@ def index(request):
 
 def classify(trainX, trainY, testX, testY):
     # The n_components key word gives us the projection to the n most discriminative directions in the dataset. We set this parameter to two to get a transformation in two dimensional space.
+
     clf = LinearDiscriminantAnalysis()
     clf.fit(trainX, trainY)
     # melakukan predict terhadao test x
@@ -94,7 +96,7 @@ def training(request):
         listed = []
         # Menyiapkan variabel penampun data
         data = []
-        
+
         # Dalam setiap kategori (kelas) akan diambil gambar dan dilakukan preprocessing
         i = 1
         for category in categories:
@@ -113,7 +115,6 @@ def training(request):
                 # Memanggil fungsi imageprocessing
                 image = imageprocessing(frame)
 
-                # Mengekstraksi data dengan deteksi tepi menggunakan fungsi canny()
                 try:
                     # ekstraksi fitur dengan menggunakan mean HSV
                     # karena cv2.mean mreturns 4 value scalar jadi digunakan :3 untuk mengambil 3 value pertama
@@ -131,45 +132,50 @@ def training(request):
         for feature, label in data:
             features.append(feature)
             labels.append(label)
-        # Pengujian K-Fold Cross Validation
+
         # Inisialisasi variabel penampung hasil uji
         acc = []
         pre = []
         rec = []
         model = []
         cm = []
-        # Menggunakan K sejumalh ...
-        cv = KFold(n_splits=4, shuffle=True, random_state=32)
-        # Split data dengan K fold
-        for train_index, test_index in cv.split(features):
-            trainX = []
-            trainY = []
-            testX = []
-            testY = []
-            # Split data menjadi data trainX dan testX untuk data fitur
-            # Split data menjadi data trainY dan testY untuk data label
+        # split data menggunakan train test split
+        trainX, testX, trainY, testY = train_test_split(
+            features, labels, test_size=0.1)
 
-            for i in test_index:
-                testX.append(features[i])
-                testY.append(labels[i])
-            print("test index: ", test_index)
-            for i in train_index:
-                trainX.append(features[i])
-                trainY.append(labels[i])
-            print("train index: ", train_index)
-            # Memanggil fungsi classify
-            accu, prec, recl, mdl, confmtrx = classify(
-                trainX, trainY, testX, testY)
-            # Menyimpan hasil setiap fold dar pengujian
-            acc.append(accu)
-            pre.append(prec)
-            rec.append(recl)
-            model.append(mdl)
-            cm.append(confmtrx)
+        # cv = KFold(n_splits=4, shuffle=True, random_state=32)
+        # # Split data dengan K fold
+        # for train_index, test_index in cv2.split(features):
+        #      trainX = []
+        #      trainY = []
+        #      testX = []
+        #      testY = []
+        #      # Split data menjadi data trainX dan testX untuk data fitur
+        #      # Split data menjadi data trainY dan testY untuk data label
+
+        # for i in test_index:
+        #          testX.append(features[i])
+        #          testY.append(labels[i])
+        # print("test index: ", test_index)
+        # for i in train_index:
+        #          trainX.append(features[i])
+        #          trainY.append(labels[i])
+        # print("train index: ", train_index)
+        # Memanggil fungsi classify
+
+        accu, prec, recl, mdl, confmtrx = classify(
+            trainX, trainY, testX, testY)
+        print(classify)
+        # Menyimpan hasil setiap fold dar pengujian
+        acc.append(accu)
+        pre.append(prec)
+        rec.append(recl)
+        model.append(mdl)
+        cm.append(confmtrx)
 
         # Model yang dipilih adalah model yang menghasilkan akurasi tertinggi
         best_model = model[acc.index(max(acc))]
-
+        print(best_model)
         # Menyimpan hasil
         pickle.dump(acc, open("accuracy.sav", "wb"))
         pickle.dump(pre, open("precision.sav", "wb"))

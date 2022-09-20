@@ -13,7 +13,7 @@
   <div class="card-group d-flex justify-content-center">
     <div class="text-dark bg-white mb-3 text-center"  >
       <div class="card-body">
-        <h5 class="card-title">Sebelum Preprocessing</h5>
+        <h5 class="card-title">Before Preprocessing</h5>
         <img src="../static/img/{{ gambarasli }}" alt="Gambar" >
         
         {% comment %} <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
@@ -22,11 +22,15 @@
     </div>
     <div class="text-dark bg-white mb-3 text-center">    
       <div class="card-body">
-        <h5 class="card-title">Setelah Preprocessing</h5>
+        <h5 class="card-title">After Preprocessing</h5>
         <img src="../static/img/{{ preprocessing }}" alt="preprocessing" >
         
         <p class="contact-address text-white mt-4">Hasil : {{ hasil }}</p>
-        {% comment %} <p class="card-text">Label : {{ label }}</p> {% endcomment %}
+
+        <p class="contact-address text-white mt-4">features : {{ features }}</p>
+
+        <p class="contact-address text-white mt-4">Hasil : {{ prediction }}</p>
+        
         
       </div>
     </div>
