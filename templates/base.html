@@ -14,9 +14,9 @@
   <body>
     
     <nav class="navbar navbar-expand-lg navbar-light">
-     <div class="container-fluid" style="margin:20px">
+     <div class="container-fluid" style="margin:6px">
       <a class="navbar-brand" href="/">
-        <img src="{% static 'assets/img/rice.png' %}" alt="Your Logo" title="Klasifikasi Kematangan Padi" style="height:35px;" />
+        <img src="{% static 'assets/img/rice.png' %}" alt="Your Logo" title="Identifikasi Tingkat Kematangan Padi" style="height:35px;" />
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -30,7 +30,7 @@
               <a class="nav-link" href="{% url 'training' %}">Training</a>
             </li>
             <li class="nav-item {% active_link 'testing' 'active' %}">
-              <a class="nav-link" href="{% url 'testing' %}">Testing</a>
+              <a class="nav-link" href="{% url 'testing' %}">Identify</a>
             </li>
 
           </ul>
@@ -45,9 +45,7 @@
       {% endblock content%}
       
 
-    {% block js %}
-    {% endblock js%}
-  </body>
+  {% block js %}  
   {% include "snippets/scripts.html" %}
   <script>
     function myFunction() {
@@ -55,4 +53,6 @@
        element.classList.add("fadeMe");
     }
   </script>
+  {% endblock js%}
+  </body>
 </html>

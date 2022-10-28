@@ -4,37 +4,98 @@
     <title>{{ title }}</title>
 {% endblock title %}
 {% comment %} heading section {% endcomment %}
-{% block heading%}
-<h5 class= "card-group d-flex justify-content-center"> {{heading}}</h5>
-{% endblock heading %}
 {% comment %} content section {% endcomment %}
 {% block content %}
-<div class = "container">
-  <div class="card-group d-flex justify-content-center">
-    <div class="text-dark bg-white mb-3 text-center"  >
-      <div class="card-body">
-        <h5 class="card-title">Before Preprocessing</h5>
-        <img src="../static/img/{{ gambarasli }}" alt="Gambar" >
-        
-        {% comment %} <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p> {% endcomment %}
-      </div>
-    </div>
-    <div class="text-dark bg-white mb-3 text-center">    
-      <div class="card-body">
-        <h5 class="card-title">After Preprocessing</h5>
-        <img src="../static/img/{{ preprocessing }}" alt="preprocessing" >
-        
-        <p class="contact-address text-white mt-4">Hasil : {{ hasil }}</p>
 
-        <p class="contact-address text-white mt-4">features : {{ features }}</p>
+<div class="w3l-grids-3 py-5">
+  <h5 class= "card-group d-flex justify-content-center"> {{heading}}</h5>
+  <div class="container">
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-3">
+          <div class="card mb-3 box-shadow">
+            <img class="card-img-top" style="display: block;" src="../static/img/{{ gambarasli }}" data-holder-rendered="true">
+            <div class="card-body">
+              <p class="card-title" style="font-weight: bold">Before Processing</p>
+              <p class="card-text" >{{ array_asli }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card mb-3 box-shadow">
+            <img src="../static/img/{{ gambar_hsv }}"class="card-img-top" style="display: block;">
+            <div class="card-body">
+              <p class="card-title" style="font-weight: bold">Converted to HSV</p>
+              <p class="card-text">{{ array_hsv }}</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="card mb-3 box-shadow">
+            <img src="../static/img/{{ equalizeHist }}"class="card-img-top" style="display: block;">
+            <div class="card-body">
+              <p class="card-title" style="font-weight: bold">Histogram Equalization</p>
+              <p class="card-text">{{ array_equalized }}</p>
+            </div>
+          </div>
+        </div>
 
-        <p class="contact-address text-white mt-4">Hasil : {{ prediction }}</p>
-        
+        <div class="col-md-3">
+          <div class="card mb-3 box-shadow">
+            <img src="../static/img/{{ preprocessing }}"class="card-img-top" style="display: block;">
+            <div class="card-body">
+              <p class="card-title" style="font-weight: bold">After Processing</p>
+              <p class="card-text">{{ array_after }}</p>
+            </div>
+          </div>
+        </div>
         
       </div>
+      <div class="alert alert-success" role="alert" style>
+        Result : {{ hasil }}
+      </div>   
     </div>
   </div>
 </div>
-</div>
+  {% comment %} <div class="card-group d-flex justify-content-center">
+    <div class="text-dark bg-white text-center"  >
+      <div class="card-body">
+        <h5 class="card-title">Before Preprocessing</h5>
+        
+          <img src="../static/img/{{ gambarasli }}" alt="Image before preprocessing" >
+        
+      </div>
+    </div>
+   <div class="text-dark bg-white  text-center"  >
+      <div class="card-body">
+        <h5 class="card-title">Converted to HSV</h5>
+        <img src="../static/img/{{ gambar_hsv }}" alt="Image converted to HSV" >
+      </div>
+    </div>
+    <div class="text-dark bg-white text-center"  >
+      <div class="card-body">
+        <h5 class="card-title">Histogram Equalization</h5>
+        <img src="../static/img/{{ equalizeHist }}" alt="Image after histogram equaliaztion" >
+      </div>
+    </div>
+    <div class="text-dark bg-white text-center">    
+      <div class="card-body">
+        <h5 class="card-title">After Preprocessing</h5>
+        <img src="../static/img/{{ preprocessing }}" alt="Image after preprocessing" >
+        <p class="">Result : {{ hasil }}<br>{{ features }}<br>Label: {{prediction}}</p>
+      </div> 
+    </div>
+  </div> {% endcomment %}
+
 {% endblock content %}
+{% block js%}
+<script src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+
+<script>
+  swal("Congratulation!", "Image Identified!", "success");
+</script>
+{% endblock js%}

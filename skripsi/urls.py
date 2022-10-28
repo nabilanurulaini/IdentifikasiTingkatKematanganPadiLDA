@@ -19,7 +19,6 @@ from . import views
 from training.views import training as trainresult
 from testing.views import testing as testresult
 
-
 urlpatterns = [
     re_path(r'^admin/', admin.site.urls),
     re_path(r'^$', views.index, name='home'),
@@ -27,5 +26,5 @@ urlpatterns = [
     re_path(r'^trainresult/$', trainresult),
     re_path(r'^testing/', include('testing.urls')),
     re_path(r'^testresult/$', testresult)
-]
+] 
 #note : always use include() when u include url from another app such as training, testing etc

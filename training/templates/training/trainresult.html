@@ -4,7 +4,6 @@
 {% endblock title %}
 {% block content %}
 <div class = "container ">
-
   <select class  ="form-select" name="state" id="maxRows" style="margin-top:30px;margin-bottom:30px">
     <option value="5000">Show all rows</option>
     <option value="5">5</option>
@@ -15,7 +14,6 @@
     <option value="70">70</option>
     <option value="100">100</option>
     <option value="1000">1000</option>
-    
   </select>
   <div class="table table-responsive" style="margin-bottom:30px">
     <table id="table" class="table table-hover table-secondary" style="width:100%; border-spacing: 1em;">
@@ -53,10 +51,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.all.min.js"></script>
- <link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
- <script>
+<link rel='stylesheet' href='https://cdn.jsdelivr.net/npm/sweetalert2@7.12.15/dist/sweetalert2.min.css'>
+<script>
      swal("Congratulation!", "Training is Successful", "success");
- </script>
+</script>
 <script type="text/javascript">
    google.charts.load('current', {'packages':['bar']});
   
@@ -88,7 +86,6 @@
       $('#maxRows')
         .on('change', function(evt) {
           //$('.paginationprev').html('');						// reset pagination
- 
          lastPage = 1;
           $('.pagination')
             .find('li')
@@ -96,13 +93,11 @@
             .remove();
           var trnum = 0; // reset tr counter
           var maxRows = parseInt($(this).val()); // get Max Rows from select option
- 
           if (maxRows == 5000) {
             $('.pagination').hide();
           } else {
             $('.pagination').show();
           }
- 
           var totalRows = $(table + ' tbody tr').length; // numbers of rows
           $(table + ' tr:gt(0)').each(function() {
             // each TR in  table and not the header
@@ -200,24 +195,9 @@
              $('.pagination [data-page="next"]').show();
              for( let i = ( parseInt($('.pagination li.active').attr('data-page'))  -2 )  ; i <= ( parseInt($('.pagination li.active').attr('data-page'))  + 2 ) ; i++ ){
                 $('.pagination [data-page="'+i+'"]').show();
- 
              }
- 
           }
        }
     }
- 
-    {% comment %} $(function() {
-      // Just to append id number for each row
-      $('table tr:eq(0)').prepend('<th> ID </th>');
- 
-      var id = 0;
- 
-      $('table tr:gt(0)').each(function() {
-        id++;
-        $(this).prepend('<td>' + id + '</td>');
-      });
-    }); {% endcomment %}
- 
 </script>
 {% endblock js%}

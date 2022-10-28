@@ -5172,8 +5172,8 @@ input[type="button"].btn-block {
 
 @media (min-width: 576px) {
     .card-group {
-        display: flex;
-        flex-flow: row wrap;
+        display: d-flex;
+
     }
 
     .card-group>.card {

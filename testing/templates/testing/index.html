@@ -3,26 +3,19 @@
 {% block title %}
     <title>{{title}}</title>
 {% endblock title %}
-{% comment %} heading section {% endcomment %}
-{% block heading%}
 
-{% endblock heading %}
-{% comment %} content section {% endcomment %}
 {% block content %}
 <div class="w3l-grids-3 py-5" id="contact">
-    <div class="container py-lg-5 py-md-4">
-      <h3 class="hny-title mb-lg-5 mb-4">{{heading}}</h3>
-        <div class="contacts12-main mb-5">
+    <div class="container py-lg-5 py-md-4">  
+        <h3 class="hny-title mb-lg-5 mb-4">{{heading}}</h3>
+        <div class="contacts-main mb-5">
             <form action="/testresult/" method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="main-input">
-                    <div class="flex-wrap subscribe-wthree-field">
-                        <label for="image">Insert image </label>   
-                   
-                   
-                        <input type="file" class="contact-input" name="image"  accept="image/*" required>
-                
-                        <button  type="submit" class="btn btn-style btn-secondary mt-2" onclick="myFunction()" value="submit">Test</button>
+                    <div class="flex-wrap subscribe-wthree-field">          
+                        <label for="image">Insert image </label>           
+                        <input type="file" multiple class="contact-input" name="image"  accept="image/*" required>      
+                        <button  type="submit" class="btn btn-style btn-secondary mt-2" onclick="myFunction()" value="submit">Classify</button>
                     </div>
                     {% comment %} <div class="d-grid">
                         <label for="image">Masukkan Model</label>   
@@ -30,11 +23,9 @@
                     <div class="d-grid">
                         <input type="file" class="contact-input" name="model"  accept="file/*" required>
                     </div> {% endcomment %}
-                </div>
-               
+                </div>   
             </form>
         </div>
     </div>
-  </div>
-            
+  </div>   
 {% endblock content %}

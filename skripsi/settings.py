@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'training',
     'testing',
-    'active_link'
+    'active_link',
 ]
 
 MIDDLEWARE = [

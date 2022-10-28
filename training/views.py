@@ -65,7 +65,7 @@ def imageprocessing(frame):
     clahe = cv2.createCLAHE(clipLimit=1.0)
     # menerapkan clahe pada value
     equalized_V = clahe.apply(V)
-    # melakukan penggabungan anara h,s, dan value yang telah diequalized
+    # melakukan penggabungan antara h,s, dan value yang telah diequalized
     equalized = cv2.merge([H, S, equalized_V])
     # Mendefinisikan warna yang akan di cari pada HSV
     lower_green = np.array([16, 43, 40])
@@ -117,11 +117,12 @@ def training(request):
 
                 try:
                     # ekstraksi fitur dengan menggunakan mean HSV
-                    # karena cv2.mean mreturns 4 value scalar jadi digunakan :3 untuk mengambil 3 value pertama
+                    # karena cv2.mean return 4 value scalar jadi digunakan :3 untuk mengambil 3 value pertama
                     # Fitur akan disimpan kedalam variabel data, Disimpan bersama dengan label dari setiap kelas
                     # Kelas matang memiliki label mentah (0) matang (1)
-                    features = cv2.mean(image)[:3]
-                    data.append([features, label])
+                    #feature = cv2.mean(image)[:3]
+                    feature = cv2.mean(image)[:3]
+                    data.append([feature, label])
                 except Exception as e:
                     print(e)
         # Data akan diacak untuk menyebar data
@@ -141,21 +142,23 @@ def training(request):
         cm = []
         # split data menggunakan train test split
         trainX, testX, trainY, testY = train_test_split(
-            features, labels, test_size=0.1)
+            features, labels, test_size=0.2, random_state=0)
+
+        print(testX)
 
         accu, prec, recl, mdl, confmtrx = classify(
             trainX, trainY, testX, testY)
-        print(classify)
-        # Menyimpan hasil 
+
+        # Menyimpan hasil
         acc.append(accu)
         pre.append(prec)
         rec.append(recl)
         model.append(mdl)
         cm.append(confmtrx)
 
-        # Model yang dipilih adalah model yang menghasilkan akurasi tertinggi
-        best_model = model[acc.index(max(acc))]
-        print(best_model)
+        # Model yang dipilih
+        best_model = model[acc.index(acc)]
+
         # Menyimpan hasil
         pickle.dump(acc, open("accuracy.sav", "wb"))
         pickle.dump(pre, open("precision.sav", "wb"))

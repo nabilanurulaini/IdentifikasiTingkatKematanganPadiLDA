@@ -1,4 +1,5 @@
 from asyncore import read
+from cv2 import equalizeHist
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 
@@ -17,8 +18,8 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 
 def index(request):
     context = {
-        'title': 'Deteksi - LDA',
-        'heading': 'Testing',
+        'title': 'LDA',
+        'heading': 'Identify',
     }
     return render(request, 'testing/index.html', context)
 
@@ -26,10 +27,11 @@ def index(request):
 def testing(request):
     if request.method == 'POST' and request.FILES['image']:
         image = request.FILES['image']
-        print(image.name)
+
         fs = FileSystemStorage()
-        mdl = 'C:\Django\skripsi\skripsi\model.sav'
-        best_model = pickle.load(open(mdl, "rb"))
+        directory = r'C:\Django\skripsi\skripsi\static\img'
+        model = 'C:\Django\skripsi\skripsi\model.sav'
+        best_model = pickle.load(open(model, "rb"))
 
         #prediction = best_model.predict(mdl)
         # print(prediction)
@@ -38,14 +40,18 @@ def testing(request):
 
         data = []
         frame = cv2.imread(image_uploaded)
-        frame = cv2.resize(frame, (336, 448))
+        frame = cv2.resize(frame, (448, 336))
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-        directory = r'C:\Django\skripsi\skripsi\static\img'
         gambarasli = "asli-{}".format(image.name)
         cv2.imwrite(os.path.join(directory, gambarasli), frame)
+        array_asli = cv2.mean(frame)[:3]
 
         hsv = cv2.cvtColor(rgb, cv2.COLOR_RGB2HSV)
+        gambar_hsv = "HSV-{}".format(filename)
+        cv2.imwrite(os.path.join(directory, gambar_hsv), hsv)
+        array_hsv = cv2.mean(hsv)[:3]
+
         H, S, V = cv2. split(hsv)
         # mendefinisikan clahe atau metode histogram ewualization yang dipakai, tile grid size 8,8 merupakan default sie dari clahe
         clahe = cv2.createCLAHE(clipLimit=1.0, tileGridSize=(8, 8))
@@ -53,6 +59,10 @@ def testing(request):
         equalized_V = clahe.apply(V)
         # melakukan penggabungan anara h,s, dan value yang telah diequalized
         equalized = cv2.merge([H, S, equalized_V])
+        equalizedRGB = cv2.cvtColor(equalized, cv2.COLOR_HSV2BGR)
+        equalizeHist = "equalize-{}".format(filename)
+        cv2.imwrite(os.path.join(directory, equalizeHist), equalizedRGB)
+        array_equalized = cv2.mean(equalizedRGB)[:3]
         # Mendefinisikan warna yang akan di cari pada HSV
         lower_green = np.array([16, 43, 40])
         upper_green = np.array([179, 255, 255])
@@ -70,23 +80,13 @@ def testing(request):
 
         result = image
         result = cv2.cvtColor(image, cv2.COLOR_HSV2BGR)
-        directory = r'C:\Django\skripsi\skripsi\static\img'
+
         preprocessing = "result-{}".format(filename)
         cv2.imwrite(os.path.join(directory, preprocessing), result)
-
+        array_after = cv2.mean(result)[:3]
         features = cv2.mean(image)[:3]
         data.append([features, 0])
-        # #try:
-        #     features = cv2.Canny(image, 100, 200)
-        #     features = np.reshape(features, (448*336))
-        #     # result = features
-        #     directory = r'C:\Django\skripsi\skripsi\static\img'
-        #     preprocessing = "result-{}".format(image.name)
-        #     cv2.imwrite(os.path.join(directory, preprocessing), features)
 
-        #     data.append([features, 0])
-        # #except Exception as e:
-        # print(e)
         features = []
         labels = []
         for feature, label in data:
@@ -102,7 +102,13 @@ def testing(request):
         'heading': 'Result',
         'hasil': "Mentah" if prediction == 0 else "Matang",
         'preprocessing': preprocessing,
+        'array_after': array_after,
         'gambarasli': gambarasli,
+        'array_asli': array_asli,
+        'gambar_hsv': gambar_hsv,
+        'array_hsv': array_hsv,
+        'equalizeHist': equalizeHist,
+        'array_equalized': array_equalized,
         'features': features,
         'prediction': prediction
     }
