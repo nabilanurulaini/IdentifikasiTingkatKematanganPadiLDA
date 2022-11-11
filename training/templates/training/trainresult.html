@@ -1,9 +1,9 @@
 {% extends "base.html" %}
 {% block title %}
-    <title>Google Charts Tutorial</title>
+    <title>{{heading}} Result</title>
 {% endblock title %}
 {% block content %}
-<div class = "container ">
+<div class = "container">
   <select class  ="form-select" name="state" id="maxRows" style="margin-top:30px;margin-bottom:30px">
     <option value="5000">Show all rows</option>
     <option value="5">5</option>
@@ -15,9 +15,9 @@
     <option value="100">100</option>
     <option value="1000">1000</option>
   </select>
-  <div class="table table-responsive" style="margin-bottom:30px">
-    <table id="table" class="table table-hover table-secondary" style="width:100%; border-spacing: 1em;">
-        <thead>
+  <div class="table table-responsive table-bordered" style="margin-bottom:30px">
+    <table id="table" class="table table-hover" style="width:100%; border-spacing: 1em;">
+        <thead style="background-color:#28a745; color:white ">
             <tr>
             {% for item in list %}
                 {% if forloop.first %}
@@ -79,7 +79,7 @@
      chart.draw(data, google.charts.Bar.convertOptions(options));
    }
    
-   getPagination('#dtBasicExample');
+   getPagination('#table');
    function getPagination(table) {
       var lastPage = 1;
  

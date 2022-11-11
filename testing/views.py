@@ -43,7 +43,7 @@ def testing(request):
         frame = cv2.resize(frame, (448, 336))
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
 
-        gambarasli = "asli-{}".format(image.name)
+        gambarasli = "asli-{}".format(filename)
         cv2.imwrite(os.path.join(directory, gambarasli), frame)
         array_asli = cv2.mean(frame)[:3]
 

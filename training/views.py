@@ -6,6 +6,8 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.model_selection import KFold
 from sklearn.model_selection import train_test_split
 
+from sklearn.metrics import mean_squared_error
+from sklearn.metrics import classification_report
 import os
 import numpy as np
 import cv2
@@ -25,7 +27,7 @@ def index(request):
 # Fungsi Klasifikasi
 
 
-def classify(trainX, trainY, testX, testY):
+def identify(trainX, trainY, testX, testY):
     # The n_components key word gives us the projection to the n most discriminative directions in the dataset. We set this parameter to two to get a transformation in two dimensional space.
 
     clf = LinearDiscriminantAnalysis()
@@ -40,8 +42,12 @@ def classify(trainX, trainY, testX, testY):
     rec = recall_score(testY, prediction)
     cm = confusion_matrix(testY, prediction)
 
+    target = ['y', 'n']
+    print('\n', classification_report(testY, prediction))
+    # # Print Confusion matrix
+
     tn, fp, fn, tp = confusion_matrix(
-        list(testY), list(prediction), labels=[0, 1]).ravel()
+        list(testY), list(prediction), labels=[1, 0]).ravel()
 
     print('True Positive', tp)
     print('True Negative', tn)
@@ -146,7 +152,7 @@ def training(request):
 
         print(testX)
 
-        accu, prec, recl, mdl, confmtrx = classify(
+        accu, prec, recl, mdl, confmtrx = identify(
             trainX, trainY, testX, testY)
 
         # Menyimpan hasil
@@ -175,8 +181,8 @@ def training(request):
             data[i][3] = rec[i]
     # Mempasing seluruh data yang akan ditampilkan
     context = {
-        'title': 'Hasil Training - LDA',
-        'heading': ' Hasil Training',
+        'title': 'Training - LDA',
+        'heading': ' Training Result',
         'hasil': data.tolist(),
         'list': listed,
     }
