@@ -8,7 +8,7 @@
         <h3 class="hny-title mb-lg-5 mb-4">{{heading}}</h3>
         <form action="/trainresult/" method="POST" class="form" style="margin-bottom: 10px">
             {% csrf_token %}
-            <div class="flex-wrap subscribe-wthree-field" style="padding-bottom: 300px">
+            <div class="flex-wrap subscribe-wthree-field" style="padding-bottom: 300px" id="mybody">
                 <input type="text" name="path" class="form-control" placeholder="Input path location" aria-label="Masukkan path" aria-describedby="basic-addon2" required="">
                 <button class="btn btn-style btn-secondary mt-4" type="submit" onclick="myFunction()" value="submit">Train</button>
             </div>

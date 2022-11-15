@@ -86,7 +86,7 @@ def testing(request):
         array_after = cv2.mean(result)[:3]
         features = cv2.mean(image)[:3]
         data.append([features, 0])
-
+        print(data)
         features = []
         labels = []
         for feature, label in data:

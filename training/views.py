@@ -146,10 +146,15 @@ def training(request):
         rec = []
         model = []
         cm = []
-        # split data menggunakan train test split
+        # split data menggunakan train test split dengan pembagian data  70% : 30%
         trainX, testX, trainY, testY = train_test_split(
-            features, labels, test_size=0.2, random_state=0)
-
+            features, labels, test_size=0.1, random_state=0)
+        # split data menggunakan train test split dengan pembagian data 80% : 20%
+        # trainX, testX, trainY, testY = train_test_split(
+        #     features, labels, test_size=0.2, random_state= 0)
+        # split data menggunakan train test split dengan pembagian data 90% : 10%
+        # trainX, testX, trainY, testY = train_test_split(
+        # features, labels, test_size=0.1, random_state= 0)
         print(testX)
 
         accu, prec, recl, mdl, confmtrx = identify(
