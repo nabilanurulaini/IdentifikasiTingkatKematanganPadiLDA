@@ -35,14 +35,26 @@
                         <td>{{ value}}</td>
                     {% endfor %}
                 </tr>
+                
             {% endfor %}
         </tbody>
     </table>
   </div>
+  {% comment %} display chart and confusion matrix {% endcomment %}
+    <div class="row">
+      <div class="col-sm-5 col-md-6" id ="container"></div>
+      <div class="col-sm-5 offset-sm-2 col-md-6 offset-md-0">
+        <img src= '../static/plot/confusion.png'></img>
+      </div>
+    </div>
+  </div>
+  
 </div>
 
-<div id = "container" style = "width: 550px; height: 400px; margin: 0 auto">
-</div>
+
+{% comment %} <div id = "container" style = "width: 550px; height: 400px; margin: 0 auto">
+  
+</div> {% endcomment %}
    
 {% endblock content %}
 
@@ -63,14 +75,14 @@
    function drawChart() {
      var data = new google.visualization.DataTable()
      data.addColumn('number', 'Training');
-     data.addColumn('number', 'Akurasi');
+     data.addColumn('number', 'Accuracy');
      data.addColumn('number', 'Recall');
-     data.addColumn('number', 'Presisi');
+     data.addColumn('number', 'Precision');
      data.addRows({{hasil|safe}});
      var options = {
        chart: {
-         title: 'Hasil Training Metode LDA',
-         subtitle: 'Akurasi, Recall, dan Presisi',
+         title: 'Result and Confusion Matrix',
+         subtitle: 'Linear Discriminant Analysis',
        }
      };
 

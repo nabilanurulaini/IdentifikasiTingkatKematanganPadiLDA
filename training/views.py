@@ -5,7 +5,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.model_selection import KFold
 from sklearn.model_selection import train_test_split
-
+from sklearn.metrics import ConfusionMatrixDisplay
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import classification_report
 import os
@@ -13,8 +13,8 @@ import numpy as np
 import cv2
 import pickle
 import random
-import numpy as np
-
+import matplotlib.pyplot as plt
+from PIL import Image
 # Create your views here..
 
 
@@ -29,6 +29,7 @@ def index(request):
 
 def identify(trainX, trainY, testX, testY):
     # The n_components key word gives us the projection to the n most discriminative directions in the dataset. We set this parameter to two to get a transformation in two dimensional space.
+    dir_plot = r'C:\Django\skripsi\skripsi\static\plot'
 
     clf = LinearDiscriminantAnalysis()
     clf.fit(trainX, trainY)
@@ -42,12 +43,17 @@ def identify(trainX, trainY, testX, testY):
     rec = recall_score(testY, prediction)
     cm = confusion_matrix(testY, prediction)
 
-    target = ['y', 'n']
     print('\n', classification_report(testY, prediction))
     # # Print Confusion matrix
 
+    ConfusionMatrixDisplay.from_estimator(
+        clf, testX, testY)
+    plt.xlabel('Actual')
+    plt.ylabel('Predicted')
+
+    plt.savefig('static\plot\confusion.png')
     tn, fp, fn, tp = confusion_matrix(
-        list(testY), list(prediction), labels=[1, 0]).ravel()
+        list(testY), list(prediction), labels=clf.classes_).ravel()
 
     print('True Positive', tp)
     print('True Negative', tn)
@@ -96,7 +102,7 @@ def training(request):
         path = request.POST['path']
         # Mengimport dataset
         dir = r"{}".format(path)
-        categories = ['mentah', 'matang']
+        categories = ['matang', 'mentah']
         # Menampilkan data kedalam tabel
         dataImage = {}
         listed = []

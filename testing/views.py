@@ -100,7 +100,7 @@ def testing(request):
     context = {
         'title': 'Hasil Deteksi - LDA',
         'heading': 'Result',
-        'hasil': "Mentah" if prediction == 0 else "Matang",
+        'hasil': "Matang" if prediction == 0 else "Mentah",
         'preprocessing': preprocessing,
         'array_after': array_after,
         'gambarasli': gambarasli,
