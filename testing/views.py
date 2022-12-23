@@ -46,28 +46,38 @@ def testing(request):
         gambarasli = "asli-{}".format(filename)
         cv2.imwrite(os.path.join(directory, gambarasli), frame)
         array_asli = cv2.mean(frame)[:3]
+        r = array_asli[0]
+        g = array_asli[1]
+        b = array_asli[2]
 
         hsv = cv2.cvtColor(rgb, cv2.COLOR_RGB2HSV)
         gambar_hsv = "HSV-{}".format(filename)
         cv2.imwrite(os.path.join(directory, gambar_hsv), hsv)
         array_hsv = cv2.mean(hsv)[:3]
+        h = array_hsv[0]
+        s = array_hsv[1]
+        v = array_hsv[2]
 
         H, S, V = cv2. split(hsv)
         # mendefinisikan clahe atau metode histogram ewualization yang dipakai, tile grid size 8,8 merupakan default sie dari clahe
-        clahe = cv2.createCLAHE(clipLimit=1.0, tileGridSize=(8, 8))
+        clahe = cv2.createCLAHE(clipLimit=1.0)
         # menerapkan clahe pada value
         equalized_V = clahe.apply(V)
         # melakukan penggabungan anara h,s, dan value yang telah diequalized
         equalized = cv2.merge([H, S, equalized_V])
+        array_eq = equalized
         equalizedRGB = cv2.cvtColor(equalized, cv2.COLOR_HSV2BGR)
         equalizeHist = "equalize-{}".format(filename)
         cv2.imwrite(os.path.join(directory, equalizeHist), equalizedRGB)
-        array_equalized = cv2.mean(equalizedRGB)[:3]
+        array_equalized = cv2.mean(array_eq)[:3]
+        equalizedH = array_equalized[0]
+        equalizedS = array_equalized[1]
+        equalizedV = array_equalized[2]
         # Mendefinisikan warna yang akan di cari pada HSV
         lower_green = np.array([16, 43, 40])
         upper_green = np.array([179, 255, 255])
         lower_brown = np.array([4, 88, 43])
-        upper_brown = np.array([9, 243, 255])
+        upper_brown = np.array([25, 243, 255])
         # Proses masking
         mask = cv2.inRange(equalized, lower_green, upper_green)
         mask2 = cv2.inRange(equalized, lower_brown, upper_brown)
@@ -83,7 +93,11 @@ def testing(request):
 
         preprocessing = "result-{}".format(filename)
         cv2.imwrite(os.path.join(directory, preprocessing), result)
-        array_after = cv2.mean(result)[:3]
+        array_after = cv2.mean(image)[:3]
+        afterH = array_after[0]
+        afterS = array_after[1]
+        afterV = array_after[2]
+
         features = cv2.mean(image)[:3]
         data.append([features, 0])
         print(data)
@@ -107,6 +121,18 @@ def testing(request):
         'array_asli': array_asli,
         'gambar_hsv': gambar_hsv,
         'array_hsv': array_hsv,
+        'r': r,
+        'g': g,
+        'b': b,
+        'h': h,
+        's': s,
+        'v': v,
+        'equalizedH': equalizedH,
+        'equalizedS': equalizedS,
+        'equalizedV': equalizedV,
+        'afterH': afterH,
+        'afterS': afterS,
+        'afterV': afterV,
         'equalizeHist': equalizeHist,
         'array_equalized': array_equalized,
         'features': features,

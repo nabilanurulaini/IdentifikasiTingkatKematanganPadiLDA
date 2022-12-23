@@ -6,6 +6,9 @@ from sklearn.discriminant_analysis import LinearDiscriminantAnalysis
 from sklearn.model_selection import KFold
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import ConfusionMatrixDisplay
+
+from sklearn.metrics import plot_confusion_matrix
+
 from sklearn.metrics import mean_squared_error
 from sklearn.metrics import classification_report
 import os
@@ -13,6 +16,7 @@ import numpy as np
 import cv2
 import pickle
 import random
+import pandas as pd
 import matplotlib.pyplot as plt
 from PIL import Image
 # Create your views here..
@@ -29,7 +33,6 @@ def index(request):
 
 def identify(trainX, trainY, testX, testY):
     # The n_components key word gives us the projection to the n most discriminative directions in the dataset. We set this parameter to two to get a transformation in two dimensional space.
-    dir_plot = r'C:\Django\skripsi\skripsi\static\plot'
 
     clf = LinearDiscriminantAnalysis()
     clf.fit(trainX, trainY)
@@ -42,18 +45,20 @@ def identify(trainX, trainY, testX, testY):
     pre = precision_score(testY, prediction)
     rec = recall_score(testY, prediction)
     cm = confusion_matrix(testY, prediction)
-
-    print('\n', classification_report(testY, prediction))
     # # Print Confusion matrix
-
+    print('\n', classification_report(testY, prediction))
+    # show confusion matrix figure
     ConfusionMatrixDisplay.from_estimator(
         clf, testX, testY)
-    plt.xlabel('Actual')
-    plt.ylabel('Predicted')
-
+    # save confusion matrix to specific directory
     plt.savefig('static\plot\confusion.png')
+
     tn, fp, fn, tp = confusion_matrix(
         list(testY), list(prediction), labels=clf.classes_).ravel()
+    conf = tn, fp, fn, tp
+
+    print_confusion_matrix = pd.DataFrame(conf)
+    print_confusion_matrix.to_csv('list_confusion_matrix.csv')
 
     print('True Positive', tp)
     print('True Negative', tn)
@@ -145,7 +150,10 @@ def training(request):
         for feature, label in data:
             features.append(feature)
             labels.append(label)
-
+        # untuk ekspor list fitur yang telah digabungkan
+        list_fitur = features, labels
+        fitur_list_ekspor = pd.DataFrame(list_fitur)
+        fitur_list_ekspor.to_csv('list_fitur.csv')
         # Inisialisasi variabel penampung hasil uji
         acc = []
         pre = []
@@ -154,14 +162,15 @@ def training(request):
         cm = []
         # split data menggunakan train test split dengan pembagian data  70% : 30%
         trainX, testX, trainY, testY = train_test_split(
-            features, labels, test_size=0.1, random_state=0)
+            features, labels, test_size=0.20, random_state=0)
         # split data menggunakan train test split dengan pembagian data 80% : 20%
         # trainX, testX, trainY, testY = train_test_split(
-        #     features, labels, test_size=0.2, random_state= 0)
+        # features, labels, test_size=0.2, random_state= 0)
         # split data menggunakan train test split dengan pembagian data 90% : 10%
         # trainX, testX, trainY, testY = train_test_split(
         # features, labels, test_size=0.1, random_state= 0)
-        print(testX)
+        print_testY = pd.DataFrame(testY)
+        print_testY.to_csv('TestY_List.csv')
 
         accu, prec, recl, mdl, confmtrx = identify(
             trainX, trainY, testX, testY)

@@ -6,89 +6,69 @@
 {% comment %} heading section {% endcomment %}
 {% comment %} content section {% endcomment %}
 {% block content %}
-
 <div class="w3l-grids-3 py-5">
   <h5 class= "card-group d-flex justify-content-center"> {{heading}}</h5>
   <div class="container">
     <div class="card-body">
       <div class="row">
         <div class="col-md-3">
-          <div class="card mb-3 box-shadow">
+          <p class="card-title" style="font-weight: bold; text-align: center;">Before Processing</p>
+          <div class="card mb-3 box-shadow">  
             <img class="card-img-top" style="display: block;" src="../static/img/{{ gambarasli }}" data-holder-rendered="true">
             <div class="card-body">
-              <p class="card-title" style="font-weight: bold">Before Processing</p>
-              <p class="card-text" >{{ array_asli }}</p>
+              <p class="card-title">Mean Image in RGB</p>
+              <p class="card-text">R = {{ r }}</p>
+              <p class="card-text">G = {{ g }}</p>
+              <p class="card-text">B = {{ b }}</p>
             </div>
           </div>
         </div>
         <div class="col-md-3">
+          <p class="card-title" style="font-weight: bold; text-align: center">Converted to HSV</p>
           <div class="card mb-3 box-shadow">
             <img src="../static/img/{{ gambar_hsv }}"class="card-img-top" style="display: block;">
             <div class="card-body">
-              <p class="card-title" style="font-weight: bold">Converted to HSV</p>
-              <p class="card-text">{{ array_hsv }}</p>
+              <p class="card-title">Mean Image in HSV</p>
+              <p class="card-text">H = {{ h }}</p>
+              <p class="card-text">S = {{ s }}</p>
+              <p class="card-text">V = {{ v }}</p>
             </div>
           </div>
         </div>
         <div class="col-md-3">
+          <p class="card-title" style="font-weight: bold; text-align: center">Histogram Equalization</p>
           <div class="card mb-3 box-shadow">
             <img src="../static/img/{{ equalizeHist }}"class="card-img-top" style="display: block;">
             <div class="card-body">
-              <p class="card-title" style="font-weight: bold">Histogram Equalization</p>
-              <p class="card-text">{{ array_equalized }}</p>
+              <p class="card-title">Mean Image in HSV</p>
+              <p class="card-text">H = {{ equalizedH }}</p>
+              <p class="card-text">S = {{ equalizedS }}</p>
+              <p class="card-text">V = {{ equalizedV }}</p>
             </div>
           </div>
         </div>
 
         <div class="col-md-3">
+          <p class="card-title" style="font-weight: bold; text-align: center">After Processing</p>
           <div class="card mb-3 box-shadow">
             <img src="../static/img/{{ preprocessing }}"class="card-img-top" style="display: block;">
-            <div class="card-body">
-              <p class="card-title" style="font-weight: bold">After Processing</p>
-              <p class="card-text">{{ array_after }}</p>
+            <div class="card-body"> 
+              <p class="card-title">Mean Image</p>
+              <p class="card-text">H = {{ afterH }}</p>
+              <p class="card-text">S = {{ afterS }}</p>
+              <p class="card-text">V = {{ afterV }}</p>
             </div>
           </div>
-        </div>
-        
+        </div>    
       </div>
       <div class="alert alert-success justify-content-center" role="alert">
         <center>
-        <p class="fs-3">Result : {{ hasil }}</p>
+        <p class="fs-5">Result : {{ hasil }}</p>
         </center>
       </div>   
     </div>
   </div>
 </div>
-  {% comment %} <div class="card-group d-flex justify-content-center">
-    <div class="text-dark bg-white text-center"  >
-      <div class="card-body">
-        <h5 class="card-title">Before Preprocessing</h5>
-        
-          <img src="../static/img/{{ gambarasli }}" alt="Image before preprocessing" >
-        
-      </div>
-    </div>
-   <div class="text-dark bg-white  text-center"  >
-      <div class="card-body">
-        <h5 class="card-title">Converted to HSV</h5>
-        <img src="../static/img/{{ gambar_hsv }}" alt="Image converted to HSV" >
-      </div>
-    </div>
-    <div class="text-dark bg-white text-center"  >
-      <div class="card-body">
-        <h5 class="card-title">Histogram Equalization</h5>
-        <img src="../static/img/{{ equalizeHist }}" alt="Image after histogram equaliaztion" >
-      </div>
-    </div>
-    <div class="text-dark bg-white text-center">    
-      <div class="card-body">
-        <h5 class="card-title">After Preprocessing</h5>
-        <img src="../static/img/{{ preprocessing }}" alt="Image after preprocessing" >
-        <p class="">Result : {{ hasil }}<br>{{ features }}<br>Label: {{prediction}}</p>
-      </div> 
-    </div>
-  </div> {% endcomment %}
-
 {% endblock content %}
 {% block js%}
 <script src="https://www.gstatic.com/charts/loader.js"></script>
